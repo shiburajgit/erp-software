@@ -1,7 +1,7 @@
-"""timetableproject11 URL Configuration
+"""ProjectSchool URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.0/topics/http/urls/
+    https://docs.djangoproject.com/en/2.1/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -14,12 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-
+from django.urls import path,include
 from . import views
+
 urlpatterns = [
-    path('', views.teacherlogin),
-    path('teacherhome/', views.teacher_view),
-    path('teacherviewtimetable/', views.teacherviewtimetable),
+    path('courselist/',views.CourseList.as_view()),
+    path('courselist/<int:id>/',views.CourseList.as_view()),
+    path('batchlist/',views.BatchList.as_view()),
+    path('batchlist/<int:id>/',views.BatchList.as_view()),
+    path('subjectlist/', views.SubjectList.as_view()),
+    path('subjectlist/<int:id>/',views.SubjectList.as_view()),
+    path('teacherlist/',views.TeacherList.as_view()),
+    path('teacherlist/<int:id>/',views.TeacherList.as_view()),
+    path('studentlist/', views.StudentList.as_view()),
+    path('student/',views.StudentPage.as_view())
 
 ]
