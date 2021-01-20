@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="card">
+<div class="cardbody">
+    <div class="boxbody">
+ <form method="post">{% csrf_token %}
+     <label for="name">feetype</label>
+
+     <input type="text" placeholder="enter feetype" name="fcategory" value="{{key.feetype}}">
+     <button type="submit">update</button>
+ </form>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

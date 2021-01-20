@@ -1,0 +1,51 @@
+{% extends 'admin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<h1>welcome admin</h1>
+<table style="width:100%" border="1">
+    <tr>
+        <th>id</th>
+        <th>Student Name</th>
+<!--        <th>Student class</th>-->
+        <th>Email</th>
+<!--        <th>Fine</th>-->
+        <th>Delete</th>
+        <th>Edit</th>
+
+
+
+    </tr>
+    {% for i in key %}
+    <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.username}}</td>
+<!--        <td>{{i.studclass}}</td>-->
+        <td>{{i.email}}</td>
+<!--        <td>{{i.fine}}</td>-->
+        <td><form method ='post'>{% csrf_token %}
+        <button type ='submit'>Delete</button>
+            <input name ='delete' value="{{i.id}}" hidden>
+            </form>
+        </td>
+        <td>
+         <a href='/school/edit/{{i.id}}/'>
+        <button type ='submit'>Edit</button>
+        </a>
+
+        </td>
+
+
+    </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>
+{% endblock %}

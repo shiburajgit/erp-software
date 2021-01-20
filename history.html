@@ -1,0 +1,53 @@
+{% extends 'admin.html' %}
+{% block content %}
+<h1>History</h1>
+
+<div class="card">
+  <div class="card-body">
+
+<table style="width:100%" border="1">
+    <section class="content">
+    <div class="row">
+        <div class="col-12">
+
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+
+        <tr>
+            <th>Admission Number</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Book Name</th>
+            <th>Issue date</th>
+            <th>Return date</th>
+            <th>Fine</th>
+        </tr>
+        {% for i in key %}
+        <tr>
+            <td>{{i.student.AdmissionNumber}}</td>
+            <td>{{i.student.FirstName}}</td>
+            <td>{{i.student.LastName}}</td>
+            <td>{{i.BookName}}</td>
+            <td>{{i.issuedate}}</td>
+            <td>{{i.returndate}}</td>
+            <td>{{i.fine}}</td>
+
+
+        </tr>
+        {% endfor %}
+</table>
+</tbody>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+</div>
+</div>
+{% endblock %}

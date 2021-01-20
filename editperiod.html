@@ -1,0 +1,64 @@
+<label for="uname"><b>Day</b></label>
+<form method='POST'>{% csrf_token %}
+<select name="day">
+                            <option value="monday">Monday</option>
+                            <option value="tuesday">Tuesday</option>
+                            <option value="wednesday">Wednesday</option>
+                            <option value="thursday">Thursday</option>
+                            <option value="friday">Friday</option>
+
+</select>
+<label for="psw"><b>Period1</b></label>
+
+                   <select name="period1">
+                       {% for i in key %}
+                            <option value="{{i.subject}}">{{i.subject}}</option>
+                       <button type="submit">Add Period</button>
+  {% endfor %}
+</select>
+<label for="psw"><b>Period2</b></label>
+
+
+
+
+                   <select name="period2">
+                       {% for i in key %}
+                            <option value="{{i.subject}}">{{i.subject}}</option>
+  {% endfor %}
+</select><label for="psw"><b>Period3</b></label>
+
+
+
+
+                   <select name="period3">
+                       {% for i in key %}
+                            <option value="{{i.subject}}">{{i.subject}}</option>
+  {% endfor %}
+</select><label for="psw"><b>Period4</b></label>
+
+
+
+
+                   <select name="period4">
+                       {% for i in key %}
+                            <option value="{{i.subject}}">{{i.subject}}</option>
+  {% endfor %}
+</select><label for="psw"><b>Period5</b></label>
+
+                   <select name="period5">
+                       {% for i in key %}
+                            <option value="{{i.subject}}">{{i.subject}}</option>
+  {% endfor %}
+</select>
+<label for="psw"><b>Period6</b></label>
+
+
+
+
+                   <select name="period6">
+                       {% for i in key %}
+                            <option value="{{i.subject}}">{{i.subject}}</option>
+  {% endfor %}
+</select>
+<button type ='submit'>Add Period</button>
+</form>

@@ -1,0 +1,87 @@
+{% extends 'admin.html' %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<h1>Placement Details</h1>
+
+<form method="post">{% csrf_token %}
+
+                    <button type="submit" name="add" style="float: right;" class="btn btn-secondary"  >Add </button>
+
+</form>
+<br><br>
+   <div class="card">
+  <div class="card-body">
+<form method="POST" enctype="multipart/form-data" >{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+    <input name="admissionyear" placeholder="Enter Admission Year" required>
+    </select>
+
+
+                                        <label for="inputEmail3" >Upload excel</label>
+                                <input type="file" name="file" required>
+<br>
+    <button type='submit'  name='submit' class="btn btn-secondary" style="float: right;">Submit</button>
+</form>
+  </div>
+   </div>
+ <div class="card">
+  <div class="card-body">
+      <section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div align="right" >
+            <form method="post">{% csrf_token %}
+<label for="bname"><b> Admission Number</b></label>
+
+    <input type="text" placeholder="Enter admission number" name="admissionno"  required>
+                <button type="submit" name="search" class="btn btn-secondary" >Search</button>
+                </form>
+                <br>
+            </div>
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                                <tr>
+
+                                    <th>Admission No</th>
+                                    <th>Admission year</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Placed Company</th>
+                        <th>Salary</th>
+                                    <th>Delete</th>
+                                    <th>Edit</th>
+                                </tr>
+
+                            {% for i in key1 %}
+                                <tr>
+                            <td>{{i.admissionno}}</td>
+                            <td>{{ i.admissionyear }}</td>
+                            <td>{{i.name}}</td>
+                            <td>{{i.email}}</td>
+                            <td>{{i.mobile}}</td>
+                            <td>{{i.company}}</td>
+                            <td>{{i.salary}}</td>
+                                     <td>
+                                <form method="post">{% csrf_token %}
+                                <button type="submit" name="delete">Delete</button>
+                                <input name="delete" value="{{i.id}}" hidden>
+        </form>
+                            </td>
+                            <td>
+                            <a href="/school/editplacement/{{i.id}}/">
+            <button type="submit">Edit</button>
+                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </thead>
+                    </table>
+        </div>
+    </div>
+      </section>
+
+      </div>
+ </div>
+{% endblock %}

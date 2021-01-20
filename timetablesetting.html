@@ -1,0 +1,277 @@
+{% extends 'admin.html' %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<h1>Set Period</h1>
+      <br>
+   <div class="card">
+  <div class="card-body">
+<form method="POST" >{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+    <input name="academicyear" id="academicyear" value="{{key1.academicyearname}}">
+
+<label for="uname"><b>Course</b></label>
+                   <select name="coursename" id="course" required>
+                       <option value="">-- select course --</option>
+                       {% for i in key2 %}
+
+                            <option value="{{i.id}}">{{i.coursename}}</option>
+  {% endfor %}
+</select>
+<label for="psw"><b>Batch</b></label>
+                   <select name="batchname" id="batch" required>
+                       "<option value="">-- select batch --</option>"
+
+                   </select>
+
+
+<label for="psw"><b>Day</b></label>
+<select name="day" required>
+    <option>--- select day ---</option>
+    <option value="Monday">Monday</option>
+    <option value="Tuesday">Tuesday</option>
+    <option value="Wednesday">Wednesday</option>
+    <option value="Thursday">Thursday</option>
+    <option value="Friday">Friday</option>
+</select>
+
+<button type='submit'  name='search' class="btn btn-secondary">Search</button>
+</form>
+  </div>
+   </div>
+  <div class="card">
+  <div class="card-body">
+<button name="add" id="add" onclick="myFunction()" style="float:right">Add</button>
+      <form method="POST" >{% csrf_token %}
+
+      <section class="content">
+    <div class="row">
+        <input type="text" name="academicyearid" value="{{ o.id }}"  hidden  >
+    <input type="text"  name="courseid"value="{{ o1.id }}" id="courseid" hidden>
+    <input type="text" name="batchid" value="{{ o2.id }}" hidden >
+                    <input type="text" name="day" value="{{day}}"  hidden >
+        <input type="text" name="sub" value="{{obj3}}" id="sub" hidden>
+         <table id="myTable" class="table table-bordered table-hover" value="1">
+
+                        <thead>
+                        <tr>
+                            <th>Start time</th>
+                        <th>End time</th>
+                        <th>is break</th>
+                        <th>Subject</th>
+                        <th>Teacher</th>
+
+                        </tr>
+                        </thead>
+
+         </table>
+        <input type="text" id="msg" value="{{msg}}" hidden >
+  </div>
+      </section>
+              <button type="submit" name="submit" class="btn btn-secondary" style="float: right;">Submit</button>
+      </form>
+  </div>
+  </div>
+{% endblock %}
+    {% block script %}
+    <script type="text/javascript">
+var x=document.getElementById("msg").value;
+
+        if (x=="conflict")
+            {
+                alert("a confilct occured");
+                }
+var j=1
+    function checkUser(data,usr){
+                    console.log(data)
+                    var batcharray =[]
+                    var batcharrayid =[]
+                  for (i=0; i<data.length; i++){
+                    if( data[i].courseid.id == usr){
+                    batcharrayid.push(data[i].id);
+                    batcharray.push(data[i].batchname);
+                    }
+                  }
+                    var string="<option>-- select batch --</option>"
+
+                    for (i=0; i<batcharrayid.length; i++){
+                    string=string+"<option value='"+batcharrayid[i]+"'>"+batcharray[i]+"</option>"
+                    }
+                    document.getElementById("batch").innerHTML = string;
+                  }
+
+function checkmyUser(data,usr){
+
+                    var subjectarray =[]
+                    var subjectarrayid =[]
+                  for (i=0; i<data.length; i++){
+
+                    if( data[i].courseid.id == usr){
+                    subjectarrayid.push(data[i].id);
+                    subjectarray.push(data[i].subject);
+                    }
+                  }
+                    var string2=""
+                    for (i=0; i<subjectarrayid.length; i++){
+                    string2=string2+"<option value='"+subjectarrayid[i]+"'>"+subjectarray[i]+"</option>"
+                    }
+                    document.getElementById("subject").innerHTML = string2;
+
+                  }
+
+  $("#course").on("change",function(){
+
+        var us = $("#course").val()
+        var ourRequest = new XMLHttpRequest();
+<!--        var myRequest = new XMLHttpRequest();-->
+        ourRequest.open('GET','/api/batchlist/')
+<!--        myRequest.open('GET','/api/subjectlist/')-->
+        ourRequest.onload = function(){
+                        var ourData = JSON.parse(ourRequest.responseText);
+                        checkUser(ourData,us);
+                      };
+<!--        myRequest.onload = function(){-->
+<!--                        var myData = JSON.parse(myRequest.responseText);-->
+<!--                        checkmyUser(myData,us);-->
+<!--                      };-->
+
+<!--                      myRequest.send();-->
+                      ourRequest.send();
+         });
+
+function checksubUser(data,usr){
+
+
+                    var subjectarray =[]
+                    var subjectarrayid =[]
+                    for (i=0; i<data.length; i++){
+                    if( data[i].courseid.id == usr){
+                    subjectarrayid.push(data[i].id);
+                    subjectarray.push(data[i].subject);
+
+                    }
+                    }
+                    var string5="<option>-- select subject --</option>"
+
+                    for (i=0; i<subjectarrayid.length; i++){
+                    string5=string5+"<option value='"+subjectarrayid[i]+"'>"+subjectarray[i]+"</option>"
+<!--                    console.log(string5)-->
+                   }
+                    document.getElementById("subject"+(j-1)).innerHTML = string5;
+}
+
+
+
+
+function checkweUser(data,usr){
+                    var teacherarray =[]
+                    var teacherarrayid =[]
+                    for (i=0; i<data.length; i++){
+                    if( data[i].subject.id == usr){
+<!--                    console.log(data[i].subject.id)-->
+<!--                    console.log(usr)-->
+                    teacherarrayid.push(data[i].Name.id);
+                    teacherarray.push(data[i].Name.Name);
+                    console.log("teacherarray")
+                    }
+                    }
+                    var string3="<option>--select teacher --</option>"
+                    for (i=0; i<teacherarrayid.length; i++){
+                    string3=string3+"<option value='"+teacherarrayid[i]+"'>"+teacherarray[i]+"</option>"
+                    console.log(string3)
+                    }
+                    document.getElementById("teacher"+(j-1)).innerHTML = string3;
+
+                    }
+var $checkBox = $('#break1');
+var $select = $('#subject1');
+    $checkBox.on('change',function(){
+
+alert("kk")
+});
+
+
+  function myFunction() {
+  var use =$("#courseid").val()
+  console.log(use);
+  var subRequest = new XMLHttpRequest();
+
+subRequest.open('GET','/api/subjectlist/')
+        subRequest.onload = function(){
+                        var subData = JSON.parse(subRequest.responseText);
+                        checksubUser(subData,use);
+                      };
+                      subRequest.send();
+
+  var table = document.getElementById("myTable");
+  console.log(table);
+  var rowCount=table.rows.length;
+  console.log(rowCount);
+  var row = table.insertRow(rowCount);
+  console.log(row);
+  var cell1=row.insertCell(0)
+  var element1=document.createElement("input");
+  element1.type="hh:mm";
+  element1.name="starttime"+j;
+  element1.id="starttime"+j;
+  cell1.appendChild(element1);
+  console.log(element1);
+  var cell2=row.insertCell(1)
+  var element2=document.createElement("input");
+  element2.type="hh:mm";
+  element2.name="endtime"+j;
+  element2.id="endtime"+j;
+  cell2.appendChild(element2)
+  var cell3=row.insertCell(2)
+  var element3 = document.createElement('input');
+  element3.type = 'checkbox';
+  element3.name = 'break'+j;
+  element3.id ='break'+j;
+  cell3.appendChild(element3);
+  var cell4=row.insertCell(3)
+   var select1=document.createElement("select");
+   select1.name="subject"+j;
+   select1.id="subject"+j;
+
+cell4.appendChild(select1);
+
+$("#subject"+j).on("change",function(){
+alert("subject");
+var us1 =$("#subject"+(j-1)).val()
+var weRequest = new XMLHttpRequest();
+weRequest.open('GET','/api/teacherlist/')
+        weRequest.onload = function(){
+                        var weData = JSON.parse(weRequest.responseText);
+                        console.log(weData)
+                        checkweUser(weData,us1);
+                      };
+                      weRequest.send();
+});
+
+  var cell5=row.insertCell(4)
+  var select2=document.createElement("select");
+  select2.name="teacher"+j;
+  select2.id="teacher"+j;
+  var option1 = document.createElement("option");
+option1.innerHTML= "-- select teacher --";
+select2.appendChild(option1);
+cell5.appendChild(select2);
+
+$("#break"+j).on("change",function(){
+
+if ($(this).is(':checked')){
+      $("#subject"+(j-1)).attr('disabled','disabled');
+      $("#teacher"+(j-1)).attr('disabled','disabled');
+    }else{
+      $("#subject"+(j-1)).removeAttr('disabled');
+      $("#teacher"+(j-1)).removeAttr('disabled');
+    }
+});
+
+  j++;
+ }
+
+
+
+       </script>
+    {% endblock %}

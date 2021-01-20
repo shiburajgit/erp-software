@@ -1,0 +1,95 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<h1>Subject</h1>
+<br>
+<div class="card">
+    <div class="card-body">
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <label for="uname"><b>Academic year</b></label>
+    <input type="text" name="academicyear"  value="{{key.academicyearname}}" required>
+    <label for="uname"><b>Course</b></label>
+    <select name="course" required>
+        <option value="">--    select course   --</option>
+        {% for i in key1 %}
+        <option value="{{i.id}}">{{ i.coursename }}</option>
+        {% endfor %}
+    </select>
+<label for="uname"><b>Subject</b></label>
+<input type="text" placeholder="Enter Subject" name="subject" required>
+
+    <label for="inputEmail3" >Upload pdf</label>
+    <input type="file" name="file"  required>
+    <br>
+<button type="submit" name="submit" class="btn btn-secondary" style="float:right;">Submit</button>
+    <input id="msg" value="{{key3}}" hidden>
+</form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <section class="content">
+    <div class="row">
+        <div class="col-12">
+
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Academic year</th>
+                                    <th>Course</th>
+                                    <th>Subject</th>
+                                    <th>Syllabus</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+
+                                {% for i in key2 %}
+
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{i.academicid.academicyearname}}</td>
+                                    <td>{{ i.courseid.coursename}}</td>
+                                    <td>{{i.subject}}</td>
+                                    <td>
+                                    {% if i.syllabus == None %}
+
+                                        {{"Not yet uploaded "}}
+                                        {% else %}
+
+                                         <a href="/school/syllabus/{{i.id}}/">
+            <button type="submit" >view</button>
+                </a>
+                                    {% endif %}
+                                    </td>
+                                   <td><form method ='post'>{% csrf_token %}
+            <button type="submit">Delete</button>
+            <input name="delete" value="{{i.id}}" hidden>
+        </form>
+        </td>
+        <td>
+            <a href="/school/editsubject/{{i.id}}/">
+            <button type="submit">Edit</button>
+                </a>
+        </td>
+    </tr>
+    {% endfor %}
+                        </tbody>
+
+                    </table>
+        </div>
+        </div>
+        </section>
+        </div>
+    </div>
+{%endblock %}
+{% block script %}
+<script>
+var x=document.getElementById("msg").value;
+ if (x=="yes"){
+    alert("already asigned")
+    }
+</script>
+{% endblock %}

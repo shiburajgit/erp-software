@@ -1,0 +1,157 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<h1>Student List</h1>
+<br>
+<div class="card">
+  <div class="card-body">
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+    <input name="admissionyear" placeholder="enter admission year" required>
+
+
+                                        <label for="inputEmail3" >Upload excel</label>
+                                <input type="file" name="file" required>
+<br>
+    <button type='submit'  name='search' class="btn btn-secondary" style="float: right;">Search</button>
+</form>
+  </div>
+   </div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+
+                            <th>Admission Year</th>
+                            <th>Admission No</th>
+
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Gender</th>
+                            <th>DOB</th>
+<!--                            <th>Blood Group</th>-->
+<!--                            <th>Phone No</th>-->
+<!--                            <th>Contact Details</th>-->
+<!--                            <th>Gender</th>-->
+
+                            <th>course</th>
+                            <th>Batch</th>
+                            <th>Quata</th>
+                            <th>Delete</th>
+                            <th>Edit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in key %}
+                        <tr>
+
+                            <td>{{i.AdmissionYear}}</td>
+                            <td>{{i.AdmissionNumber}}</td>
+                            <td>{{i.FirstName}}</td>
+                            <td>{{i.LastName}}</td>
+                            <td>{{i.Gender}}</td>
+                            <td>{{i.DOB|date:'Y-m-d'}}</td>
+<!--                            <td>{{i.BloodGroup}}</td>-->
+<!--                            <td>{{i.PhoneNumber}}</td>-->
+<!--                            <td>{{i.ContactDetails}}</td>-->
+                            <td>{{i.course.coursename}}</td>
+
+                            <td>{{i.Batch.batchname}}</td>
+ <td>{{i.AdmittedQuata.AdmittedQuata}}</td>
+                            <td>
+                                <form method='post'>{% csrf_token %}
+                                    <button type="submit">Delete</button>
+                                    <input name="delete" value="{{i.id}}" hidden>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="/school/editstudent/{{i.id}}/">
+                                    <button type="submit">Edit</button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                    <div class="pagination">
+    <span class="step-links">
+        {% if key.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ key.number }} of {{ key.paginator.num_pages }}.
+        </span>
+
+        {% if key.has_next %}
+            <a href="?page={{ key.next_page_number }}">next</a>
+            <a href="?page={{ key.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<!--
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+<!-- /.content-wrapper -->
+
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+
+</script>
+</body>
+</html>
+
+{% endblock %}

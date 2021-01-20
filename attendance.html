@@ -1,0 +1,381 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<h1>Attendance</h1>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+
+   <div class="card">
+  <div class="card-body">
+<form method="POST" >{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+    <input name="academicyear" id="academicyear" value="{{key1.academicyearname}}" required>
+
+<label for="uname"><b>Course</b></label>
+                   <select name="coursename" id="course" required>
+                       <option value="">-- select course --</option>
+                       {% for i in key2 %}
+
+                            <option value="{{i.id}}">{{i.coursename}}</option>
+  {% endfor %}
+</select>
+<label for="psw"><b>Batch</b></label>
+                   <select name="batchname" id="batch" required>
+                       <option value="">-- select batch --</option>
+
+                   </select>
+    <label for="psw"><b>Subject</b></label>
+                   <select name="subject" id="subject" required>
+                       <option value="">-- select subject --</option>
+                   </select>
+    <label for="uname"><b>Date</b></label>
+ <input type="date" name="date"  required>
+
+<button type='submit'  name='search' class="btn btn-secondary">Search</button>
+     <input id="msg" value="{{msg}}" hidden>
+
+
+</form>
+  </div>
+   </div>
+<div class="card">
+  <div class="card-body">
+<form method="POST">{% csrf_token %}
+
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+
+                    <input type="text" name="academicyearid" value="{{ o.id }}" hidden  >
+    <input type="text"  name="courseid"value="{{ o1.id }}" hidden >
+    <input type="text" name="batchid" value="{{ o2.id }}" hidden >
+                    <input type="date" name="date" value="{{ key5 }}"  hidden >
+            <input type="text" name="subjectid" value="{{ o3.id }}" hidden>
+
+
+
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Admission number</th>
+                        <th>First name</th>
+                        <th>Last Name</th>
+                        <th>Attendance</th>
+                        <th>Reason</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+{% for i in key4 %}
+
+
+                        <tr>
+                            <td>{{i.AdmissionNumber}}
+                            <input name="student{{forloop.counter0}}" type="text" value="{{i.id}}" hidden></td>
+                        <td>{{i.FirstName}}</td>
+                        <td>{{i.LastName}}</td>
+                        <td>
+{% if i.attendance == 'absent' %}
+
+  <span class="button-checkbox" >
+        <button type="button" class="btn" data-color="secondary"  name="attendance">Absent</button>
+      <input type="checkbox" class="hidden" checked />
+  </span>
+{% else %}
+
+    <span class="button-checkbox" >
+        <button type="button" class="btn" data-color="secondary" value="{{forloop.counter0}}" onclick=" myFunction(this.value)" name="attendance" id="attendance{{forloop.counter0}}">Absent</button>
+<!--     <input type="checkbox" class="attendance"  name="attendance{{forloop.counter0}}" on value="0" onclick=" myFunction(this.value)">-->
+        <input type="checkbox" class="hidden" id="test{{forloop.counter0}}"   name="attendance{{forloop.counter0}}" value="0"  />
+    </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                  {% if i.attendance == 'absent' %}
+
+                            <input type="text" value="{{i.reason}}">
+
+
+                    {% else %}
+                            <input type="text" id="reason{{forloop.counter0}}" name="reason{{forloop.counter0}}" style="display:none">
+
+                                   {% endif %}
+                        </td>
+                        </tr>
+                        {% endfor %}
+</tbody>
+                    </table>
+<br>
+                    <div style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+                        <button type='submit'  name='submit' class="btn btn-secondary">submit</button>
+
+
+</div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+</form>
+<!-- /.content -->
+
+<!-- /.content-wrapper -->
+
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+
+<!-- ./wrapper -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static 'admin/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'admin/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- DataTables -->
+<script src="{% static 'admin/plugins/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'admin/dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'admin/dist/js/demo.js' %}"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+
+
+div label input {
+   margin-right:100px;
+}
+body {
+    font-family:sans-serif;
+}
+</script>
+<script>
+$(function () {
+    $('.button-checkbox').each(function () {
+
+        // Settings
+        var $widget = $(this),
+            $button = $widget.find('button'),
+            $checkbox = $widget.find('input:checkbox'),
+            color = $button.data('color'),
+            settings = {
+                on: {
+                    icon: 'glyphicon glyphicon-check'
+                },
+                off: {
+                    icon: 'glyphicon glyphicon-unchecked'
+                }
+            };
+
+        // Event Handlers
+        $button.on('click', function () {
+            $checkbox.prop('checked', !$checkbox.is(':checked'));
+            $checkbox.triggerHandler('change');
+            updateDisplay();
+        });
+        $checkbox.on('change', function () {
+            updateDisplay();
+        });
+
+        // Actions
+        function updateDisplay() {
+            var isChecked = $checkbox.is(':checked');
+
+            // Set the button's state
+            $button.data('state', (isChecked) ? "on" : "off");
+
+            // Set the button's icon
+            $button.find('.state-icon')
+                .removeClass()
+                .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+            // Update the button's color
+            if (isChecked) {
+                $button
+                    .removeClass('btn-default')
+                    .addClass('btn-' + color + ' active');
+            }
+            else {
+                $button
+                    .removeClass('btn-' + color + ' active')
+                    .addClass('btn-default');
+            }
+        }
+
+        // Initialization
+        function init() {
+
+            updateDisplay();
+
+            // Inject the icon if applicable
+            if ($button.find('.state-icon').length == 0) {
+                $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+            }
+        }
+        init();
+    });
+});
+var x=document.getElementById("msg").value;
+console.log(x)
+ if (x=="yes"){
+    alert("Already marked attendance")}
+</script>
+</body>
+</html>
+
+{% endblock %}
+{% block script %}
+<!--<script>-->
+<!--$( "select" ) .change(function () {-->
+<!--document.getElementById("se").innerHTML="You selected"-->
+<!--&lt;!&ndash;document.getElementById("loc").innerHTML="You selected: "+document.getElementById("se").value;&ndash;&gt;-->
+<!--});-->
+
+<!--<script>-->
+
+<!--function myFunction() {-->
+
+<!--&lt;!&ndash;  var txtNewInputBox = document.createElement('id');&ndash;&gt;-->
+<!--    for (i = 0; i <4; i++){-->
+<!--   var x = document.getElementById("attendance"+i).name;-->
+<!--   -->
+
+<!--&lt;!&ndash;   for (char ch : x.toCharArray()) {&ndash;&gt;-->
+<!--&lt;!&ndash;            &ndash;&gt;-->
+<!--&lt;!&ndash;            if (Character.isDigit(ch)) {&ndash;&gt;-->
+<!--&lt;!&ndash;                System.out.print(ch + " ");&ndash;&gt;-->
+<!--&lt;!&ndash;            }&ndash;&gt;-->
+
+<!--&lt;!&ndash;    // Then add the content (a new input box) of the element.&ndash;&gt;-->
+<!--&lt;!&ndash;	txtNewInputBox.innerHTML = "<input type='text' id='newInputBox'>";&ndash;&gt;-->
+
+<!--&lt;!&ndash;    // Finally put it where it is supposed to appear.&ndash;&gt;-->
+<!--&lt;!&ndash;	document.getElementById("newElementId").appendChild(txtNewInputBox);&ndash;&gt;-->
+
+<!--}-->
+<!--</script>-->
+<!--$(document).ready(function(){-->
+<!--for (i = 0; i <4; i++) {-->
+<!--var a;-->
+<!--    $("#attendance"+.toString()).click(function(){-->
+
+<!--        a=$("#reason"+num.toString(i)).val("leave");-->
+<!--        console.log(a)-->
+
+<!--    });-->
+<!--  }-->
+<!--});-->
+<script>
+
+function myFunction(val) {
+
+   var x = document.getElementById('reason'+val);
+
+
+
+
+
+<!--$("#test"+val).function myFunction(val) {-->
+
+		if($("#test"+val).val()==0)
+		{
+		x.style.display = "block"
+		 $("#test"+val).val(1);
+		}
+		else
+		{
+		x.style.display = "none"
+		 $("#test"+val).val(0);
+		}
+<!--		alert($("#test"+val).val());-->
+
+<!--	});-->
+
+
+}
+function checkmyUser(data,usr){
+
+                    var subjectarray =[]
+                    var subjectarrayid =[]
+                  for (i=0; i<data.length; i++){
+
+                    if( data[i].courseid.id == usr){
+                    subjectarrayid.push(data[i].id);
+                    subjectarray.push(data[i].subject);
+                    }
+                  }
+                    var string2="<option>-- select subject --</option>"
+                    for (i=0; i<subjectarrayid.length; i++){
+                    string2=string2+"<option value='"+subjectarrayid[i]+"'>"+subjectarray[i]+"</option>"
+                    }
+                    document.getElementById("subject").innerHTML = string2;
+                  }
+function checkUser(data,usr){
+                    var batcharray =[]
+                    var batcharrayid =[]
+                  for (i=0; i<data.length; i++){
+
+                    if( data[i].courseid.id == usr){
+                    batcharrayid.push(data[i].id);
+                    batcharray.push(data[i].batchname);
+                    }
+                  }
+                    var string="<option> -- select batch --</option>"
+                    for (i=0; i<batcharrayid.length; i++){
+                    string=string+"<option value='"+batcharrayid[i]+"'>"+batcharray[i]+"</option>"
+                    }
+                    document.getElementById("batch").innerHTML = string;
+
+                  }
+
+
+$("#course").on("change",function(){
+
+        var us = $("#course").val()
+        var ourRequest = new XMLHttpRequest();
+        var myRequest = new XMLHttpRequest();
+        ourRequest.open('GET','/api/batchlist/')
+        myRequest.open('GET','/api/subjectlist/')
+        ourRequest.onload = function(){
+                        var ourData = JSON.parse(ourRequest.responseText);
+                        checkUser(ourData,us);
+                      };
+        myRequest.onload = function(){
+                        var myData = JSON.parse(myRequest.responseText);
+                        checkmyUser(myData,us);
+                      };
+                      myRequest.send();
+                      ourRequest.send();
+         });
+
+
+</script>
+
+{% endblock %}

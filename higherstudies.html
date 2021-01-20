@@ -1,0 +1,63 @@
+{% extends 'admin.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card">
+    <div class="card-body">
+    <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                <a href="/school/subadd/" name="submit">add</a>
+
+            <tr>
+            <th>FeeCategory</th>
+            <th>FeeType</th>
+            <th>Fromdate</th>
+            <th>DueDate</th>
+            <th>Amount</th>
+            <th>Edit</th>
+            <th>Delete</th>
+
+        </tr>
+                <tr>
+                    {% for i in key1 %}
+                    <td>{{i.category.category}}</td>
+                    <td>{{i.feetype.feetype}}</td>
+                    <td>{{i.fromdate}}</td>
+                    <td>{{i.Duedate}}</td>
+                    <td>{{i.amount}}</td>
+
+                <td>
+            <a href="/school/subedit/{{i.id}}/">
+                <button type="submit">Edit</button>
+                <input name="edit" value="{{i.id}}" hidden>
+
+            </a>
+            </td>
+
+            <td>
+                <form method="post">{% csrf_token %}
+                <button type="submit">delete</button>
+            <input name="delete" value="{{i.id}}" hidden>
+                    </form>
+            </td>
+            </tr>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+{% endfor %}
+{% endblock %}
+
+<div class="container">
+    <div class="checkbox">
+      <label>
+          <input type="checkbox" value=""></label>

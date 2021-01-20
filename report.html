@@ -1,0 +1,21 @@
+{% extends 'admin.html' %}
+{% block content %}
+<form method='POST'>{% csrf_token %}
+
+    <label for="uname"><b>course</b></label>
+    <select name="coursename">
+        {% for i in key1 %}
+        <option value="{{i.id}}">{{ i.coursename}}</option>
+        {% endfor %}
+    </select>
+
+
+    <label for="uname"><b>batch</b></label>
+    <select name="batchname">
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.batchname}}</option>
+        {% endfor %}
+    </select>
+
+</form>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+    <input name="admissionyear" placeholder="enter admission year" required>
+
+
+                                        <label for="inputEmail3" >Upload excel</label>
+                                <input type="file" name="file" required>
+<br>
+    <button type='submit'  name='search' class="btn btn-secondary" style="float: right;">Search</button>
+</form>
+  </div>
+   </div>
+<table style="width:100%" border="1">
+    <tr>
+        <th> id</th>
+        <th>Admission No</th>
+        <th>Admission Year</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>DOB</th>
+        <th>Blood Group</th>
+        <th>Phone No</th>
+        <th>Contact Details</th>
+        <th>Gender</th>
+        <th>RollNo</th>
+        <th>Batch</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+    {% for i in key %}
+    <tr>
+
+    <td>{{i.id}}</td>
+        <td>{{i.AdmissionNumber}}</td>
+    <td>{{i.AdmissionYear}}</td>
+    <td>{{i.FirstName}}</td>
+        <td>{{i.LastName}}</td>
+        <td>{{i.Email}}</td>
+        <td>{{i.DOB|date:"Y-m-d"}}</td>
+        <td>{{i.BloodGroup}}</td>
+        <td>{{i.PhoneNumber}}</td>
+        <td>{{i.ContactDetails}}</td>
+            <td>{{i.Gender}}</td>
+        <td>{{i.RollNo}}</td>
+        <td>{{i.Batch}}</td>
+
+        <td><form method ='post'>{% csrf_token %}
+            <button type="submit">Delete</button>
+            <input name="delete" value="{{i.id}}" hidden>
+        </form>
+        </td>
+        <td>
+            <a href="/school/editstudent/{{i.id}}/">
+            <button type="submit">Edit</button>
+                </a>
+        </td>
+    </tr>
+    {% endfor %}
+
+{% endblock %}

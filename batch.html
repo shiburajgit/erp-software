@@ -1,0 +1,83 @@
+{% extends 'admin.html' %}
+{% block content %}
+<h1>Batch</h1>
+<br>
+<div class="card">
+    <div class="card-body">
+<form method="post">{% csrf_token %}
+   <label for="uname"><b>Academic year</b></label>
+    <input type="text" name="academicyear"  value="{{key.academicyearname}}" required>
+
+    <label for="uname"><b>Course</b></label>
+    <select name="course" required>
+        <option value="">--    select course   --</option>
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.coursename }}</option>
+        {% endfor %}
+    </select>
+
+
+        <label for="uname"><b>Batch name</b></label>
+         <input type="text" name="batch" placeholder="Enter Batch" required>
+
+        <!--    <label for="uname"><b>Description</b></label>-->
+        <!-- <input type="text" name="description" required>-->
+        <button type="submit"  name="submit" class="btn btn-secondary">Submit</button>
+    <input id="msg" value="{{key3}}" hidden>
+</form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <section class="content">
+    <div class="row">
+        <div class="col-12">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Academic year</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Delete</th>
+                                    <th>Edit</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+
+                                {% for i in key1 %}
+
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{i.academicid.academicyearname}}</td>
+                                    <td>{{ i.courseid.coursename}}</td>
+                                    <td>{{i.batchname}}</td>
+                                   <td><form method ='post'>{% csrf_token %}
+            <button type="submit" name="delete">Delete</button>
+            <input name="delete" value="{{i.id}}" hidden>
+        </form>
+        </td>
+        <td>
+            <a href="/school/editbatch/{{i.id}}/">
+            <button type="submit">Edit</button>
+                </a>
+        </td>
+    </tr>
+    {% endfor %}
+                        </tbody>
+
+                    </table>
+        </div>
+        </div>
+        </section>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+<script>
+var x=document.getElementById("msg").value;
+ if (x=="yes"){
+    alert("already asigned")
+    }
+</script>
+{% endblock %}

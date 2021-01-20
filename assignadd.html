@@ -1,0 +1,46 @@
+{% extends 'admin.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+<table style="width:100%" border="1">
+<!--    <a href="/school/addtransport/" name="submit">add</a></br>-->
+    <tr>
+        <form method="post">{% csrf_token %}
+     <label for="uname"><b>Vehiclestop</b></label>
+    <select name="busstop" required>
+    <option value="">---select---</option>
+
+        {% for i in key1 %}
+        <option value="{{i.id}}">{{ i.busstop }}</option>
+        {% endfor %}
+    </select>
+            <label for="uname"><b>Vehicleroute</b></label>
+    <select name="busroute" required>
+    <option value="">---select---</option>
+
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.routename }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="uname"><b>droptime</b></label>
+ <input type="time" name="droptime" value="{{ key.Drop }}" required>
+
+    <label for="uname"><b>picktime</b></label>
+ <input type="time" name="picktime" value="{{ key.pick }}" required>
+
+    <label for="uname"><b>amount</b></label>
+ <input type="text" name="transportprice" value="{{ key.transportprice }}" required>
+
+       <button type="submit">submit</button>
+
+        </form>
+    </tr>
+</table>
+    </div>
+</div>
+{% endblock %}
+
+
+

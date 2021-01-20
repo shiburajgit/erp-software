@@ -1,0 +1,26 @@
+{% extends 'admin.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+
+    <form method="post">{% csrf_token %}
+
+     <label for="uname"><b>Vno</b></label>
+    <select name="busnumber">
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.busnumber }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="uname"><b>VehicleRoute</b></label>
+ <input type="text" name="busroute" value="{{ key3.routename }}">
+
+
+    <button type="submit">Save</button>
+
+
+</form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="card">
+<div class="cardbody">
+    <div class="boxbody">
+ <form method="post">{% csrf_token %}
+     <label for="name">category</label>
+     <input type="text" placeholder="enter category" name="category" value="{{key.category.category}}">
+     <label for="name">feetype</label>
+     <input type="text" placeholder="enter feetype" name="feetype" value="{{key.feetype.feetype}}">
+     <label for="name">fromdate</label>
+     <input type="date" placeholder="enter fromdate" name="fromdate" value="{{key.fromdate}}">
+     <label for="name">duedate</label>
+     <input type="date" placeholder="enter amount" name="duedate" value="{{key.duedate}}">
+      <label for="name">amount</label>
+     <input type="text" placeholder="enter amount" name="amount" value="{{key.amount}}">
+     <button type="submit" name="edit">update</button>
+ </form>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

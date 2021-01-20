@@ -1,0 +1,159 @@
+{% extends 'admin.html' %}
+{% block content %}
+<h1>Assign Teacher</h1><br>
+
+<div class="card">
+            <div class="card-header">
+
+                <br>
+<form method="POST" >{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+                   <input type="phoneNumber" id="academicyear" value="{{key1.academicyearname}}" placeholder="Contact number"
+                       name="academicyear" class="col-sm-1">
+<label for="uname"><b>Course</b></label>
+                   <select name="coursename" id="course" required>
+                       <option value="">-- select course --</option>
+                       {% for i in key2 %}
+                            <option value="{{i.id}}">{{i.coursename}}</option>
+  {% endfor %}
+</select>
+<label for="psw"><b>Batch</b></label>
+                   <select name="batchname" id="batch" required>
+                       <option value="">-- select batch --</option>
+                   </select>
+<label for="psw"><b>Subject</b></label>
+                   <select name="subject" id="subject" required>
+                       <option value="">-- select subject --</option>
+                   </select>
+    <label for="psw"><b>Teacher</b></label>
+                   <select name="teacher" required >
+                       <option value="">-- select teacher --</option>
+                       {% for i in key5 %}
+                            <option value="{{i.id}}">{{i.Name}}</option>
+  {% endfor %}
+                   </select>
+
+<!-- <a href="/school/period/{{key1.academicyearname}}/{{key2.coursename}}/{{key3.batchname}}/">-->
+<button type='submit' name="assignteacher" class="btn btn-secondary" style="float:right">Assign Teacher</button>
+    <input id="msg" value="{{key3}}" hidden>
+    </form>
+            </div>
+</div>
+<div class="card">
+            <div class="card-header">
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+
+                <!-- /.card-header -->
+
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Academic Year</th>
+                                    <th>Course</th>
+                                    <th>Batch</th>
+                                    <th>Subject</th>
+                                    <th>Teacher</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+
+                                </tr>
+                        </thead>
+                        <tbody>
+
+                                {% for i in key %}
+
+                                <tr>
+                                    <td>{{ forloop.counter}}</td>
+                                    <td>{{ i.academicyearname.academicyearname }}</td>
+                                    <td>{{ i.coursename.coursename }}</td>
+                                    <td>{{ i.batchname.batchname }}</td>
+                                    <td>{{ i.subject.subject }}</td>
+                                    <td>{{ i.Name.Name }}</td>
+                                    <td><a href="/school/editassignteacher/{{i.id}}/">
+                                    <button name="edit" type="submit">Edit</button>
+                                    </a></td>
+                                    <td><form method="POST">{% csrf_token %}
+                                        <button type="submit">Delete</button>
+                                         <input name="delete" value="{{i.id}}" hidden>
+
+                                    </form> </td>
+
+                                </tr>
+                                {% endfor %}
+                            <!--<table style="width:100%" border="1">-->
+
+                        </tbody>
+
+                    </table>
+        </div>
+    </div>
+{% endblock %}
+    {% block script %}
+
+<script>
+
+var x=document.getElementById("msg").value;
+console.log(x)
+    if (x == 'yes'){
+    alert("already assigned")
+    }
+
+function checkUser(data,usr){
+                    console.log(data)
+                    var batcharray =[]
+                    var batcharrayid =[]
+                  for (i=0; i<data.length; i++){
+                    if( data[i].courseid.id == usr){
+                    batcharrayid.push(data[i].id);
+                    batcharray.push(data[i].batchname);
+                    }
+                  }
+
+                    var string="<option>-- select batch --</option>"
+
+                    for (i=0; i<batcharrayid.length; i++){
+                    string=string+"<option value='"+batcharrayid[i]+"'>"+batcharray[i]+"</option>"
+                    }
+                    document.getElementById("batch").innerHTML = string;
+                  }
+function checkmyUser(data,usr){
+                    var subjectarray =[]
+                    var subjectarrayid =[]
+                  for (i=0; i<data.length; i++){
+                    if( data[i].courseid.id == usr){
+                    subjectarrayid.push(data[i].id);
+                    subjectarray.push(data[i].subject);
+                    }
+                  }
+                    var string2="<option>-- select subject --</option>"
+                    for (i=0; i<subjectarrayid.length; i++){
+                    string2=string2+"<option value='"+subjectarrayid[i]+"'>"+subjectarray[i]+"</option>"
+                    }
+                    document.getElementById("subject").innerHTML = string2;
+                  }
+  $("#course").on("change",function(){
+
+
+        var us = $("#course").val()
+        var ourRequest = new XMLHttpRequest();
+        var myRequest = new XMLHttpRequest();
+        ourRequest.open('GET','/api/batchlist/')
+        myRequest.open('GET','/api/subjectlist/')
+        ourRequest.onload = function(){
+                        var ourData = JSON.parse(ourRequest.responseText);
+                        checkUser(ourData,us);
+                      };
+        myRequest.onload = function(){
+                        var myData = JSON.parse(myRequest.responseText);
+                        checkmyUser(myData,us);
+                      };
+                      myRequest.send();
+                      ourRequest.send();
+         });
+</script>
+
+{% endblock %}

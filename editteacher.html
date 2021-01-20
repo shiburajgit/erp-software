@@ -1,0 +1,193 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>registration - Bootsnipp.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'admission/z8b1X_data/bootstrap_002.css' %}" rel="stylesheet" id="bootstrap-css">
+    <style type="text/css">
+    body {
+     background: url('https://static-communitytable.parade.com/wp-content/uploads/2014/03/rethink-target-heart-rate-number-ftr.jpg') fixed;
+    background-size: cover;
+}
+
+*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    border-radius: 0.3em;
+    background-color: #f2f2f2;
+}
+
+*[role="form"] h2 {
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    margin-top: 5%;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+
+    </style>
+    <script src="{% static 'admission/z8b1X_data/jquery.js' %}"></script>
+    <script src="{% static 'admission/z8b1X_data/bootstrap.js' %}"></script>
+    <script type="{% static 'admission/text/javascript' %}">
+        window.alert = function(){};
+        var defaultCSS = document.getElementById('bootstrap-css');
+        function changeCSS(css){
+            if(css) $('head > link').filter(':first').replaceWith('<link rel="stylesheet" href="'+ css +'" type="text/css" />');
+            else $('head > link').filter(':first').replaceWith(defaultCSS);
+        }
+        $( document ).ready(function() {
+          var iframe_height = parseInt($('html').height());
+          window.parent.postMessage( iframe_height, 'https://bootsnipp.com');
+        });
+
+    </script>
+</head>
+<body>
+<link href="{% static 'admission/z8b1X_data/bootstrap.css' %}" rel="stylesheet" id="bootstrap-css">
+<script src="{% static 'admission/z8b1X_data/bootstrap_002.js' %}"></script>
+<script src="{% static 'admission/z8b1X_data/jquery-2.js' %}"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+
+        <form class="form-horizontal" role="form" method="POST">{% csrf_token %}
+
+
+        <h2>REGISTRATION</h2>
+
+
+
+            <div class="form-group">
+            <label for="firstName" class="col-sm-3 control-label">Name</label>
+            <div class="col-sm-9">
+                <input type="text" id="firstname" value="{{key.Name}}" placeholder="Name" class="form-control" name="name">
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">Designation</label>
+            <div class="col-sm-9">
+                <input type="text" id="email" placeholder="Designation" value="{{key.Designation}}" class="form-control" name="designation">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="birthDate" class="col-sm-3 control-label">Education</label>
+            <div class="col-sm-9">
+                <input type="text" id="birthDate" class="form-control" value="{{key.Education}}" name="education">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Experiance</label>
+            <div class="col-sm-9">
+                <input type="text" id="bloodgroup" placeholder="Experiance" value="{{key.Experiance}}" class="form-control" name="experiance">
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Gender</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <select name="gender">
+                                                        <option >-- select gender --</option>
+
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- /.form-group -->
+
+        <button type="submit" class="btn btn-primary btn-block">Add deatails</button>
+</form>
+    </form> <!-- /form -->
+</div> <!-- ./container -->
+<script type="text/javascript">
+	$(function(){
+	$.validator.setDefaults({
+		highlight: function(element){
+			$(element)
+			.closest('.form-group')
+			.addClass('has-error')
+		},
+		unhighlight: function(element){
+			$(element)
+			.closest('.form-group')
+			.removeClass('has-error')
+		}
+	});
+
+	$.validate({
+		rules:
+		{
+		    password: "required",
+			birthDate: "required",
+			weight: {
+			    required:true,
+			    number:true
+			},
+			height:  {
+			    required:true,
+			    number:true
+			},
+			email: {
+				required: true,
+				email: true
+			}
+		},
+			messages:{
+				email: {
+				required: true,
+				email: true
+			}
+		},
+				password: {
+					required: " Please enter password"
+				},
+				birthDate: {
+					required: " Please enter birthdate"
+				},
+				email: {
+					required: ' Please enter email',
+					email: ' Please enter valid email'
+				},
+				weight: {
+					required: " Please enter your weight",
+					number: " Only numbers allowed"
+				},
+				height: {
+					required: " Please enter your height",
+					number: " Only numbers allowed"
+				},
+			}
+
+	});
+});
+</script>
+
+
+</body>
+</html>
+{% endblock %}

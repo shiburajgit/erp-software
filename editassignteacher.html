@@ -1,0 +1,96 @@
+{% extends 'admin.html' %}
+{% block content %}
+<h1>Assign Teacher</h1>
+                <br>
+<form method="POST" >{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+                   <input type="phoneNumber" id="academicyear" value="{{key1.academicyearname}}" placeholder="Contact number"
+                       name="academicyear">
+<label for="uname"><b>Course</b></label>
+                   <select name="coursename" id="course">
+                       <option>-- select course --</option>
+                       {% for i in key2 %}
+                            <option value="{{i.id}}">{{i.coursename}}</option>
+  {% endfor %}
+</select>
+<label for="psw"><b>Batch</b></label>
+                   <select name="batchname" id="batch">
+                       <option>-- select batch --</option>
+                   </select>
+<label for="psw"><b>Subject</b></label>
+                   <select name="subject" id="subject">
+                       <option>-- select subject --</option>
+                   </select>
+    <label for="psw"><b>Teacher</b></label>
+                   <select name="teacher"  id="teacher">
+                       <option>-- select teacher --</option>
+                       {% for i in key3 %}
+                            <option value="{{i.id}}">{{i.Name}}</option>
+  {% endfor %}
+                   </select>
+    <br>
+<!-- <a href="/school/period/{{key1.academicyearname}}/{{key2.coursename}}/{{key3.batchname}}/">-->
+<button type='submit'  class="btn btn-secondary" style="float:right" >Assign Teacher</button>
+    </form>
+{% endblock %}
+ {% block script %}
+
+<script>
+function checkUser(data,usr){
+                    console.log(data)
+                    var batcharray =[]
+                    var batcharrayid =[]
+                  for (i=0; i<data.length; i++){
+                    if( data[i].courseid.id == usr){
+                    batcharrayid.push(data[i].id);
+                    batcharray.push(data[i].batchname);
+                    }
+                  }
+                    var string=""
+
+                    for (i=0; i<batcharrayid.length; i++){
+                    string=string+"<option value='"+batcharrayid[i]+"'>"+batcharray[i]+"</option>"
+                    }
+                    document.getElementById("batch").innerHTML = string;
+                  }
+function checkmyUser(data,usr){
+
+                    var subjectarray =[]
+                    var subjectarrayid =[]
+                  for (i=0; i<data.length; i++){
+
+                    if( data[i].courseid.id == usr){
+                    subjectarrayid.push(data[i].id);
+                    subjectarray.push(data[i].subject);
+                    }
+                  }
+                    var string2=""
+                    for (i=0; i<subjectarrayid.length; i++){
+                    string2=string2+"<option value='"+subjectarrayid[i]+"'>"+subjectarray[i]+"</option>"
+                    }
+                    document.getElementById("subject").innerHTML = string2;
+                  }
+  $("#course").on("change",function(){
+
+        var us = $("#course").val()
+        var ourRequest = new XMLHttpRequest();
+        var myRequest = new XMLHttpRequest();
+        ourRequest.open('GET','/api/batchlist/')
+        myRequest.open('GET','/api/subjectlist/')
+        ourRequest.onload = function(){
+                        var ourData = JSON.parse(ourRequest.responseText);
+                        checkUser(ourData,us);
+                      };
+        myRequest.onload = function(){
+                        var myData = JSON.parse(myRequest.responseText);
+                        checkmyUser(myData,us);
+                      };
+                      myRequest.send();
+                      ourRequest.send();
+         });
+
+
+</script>
+
+{% endblock %}

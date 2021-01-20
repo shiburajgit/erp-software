@@ -1,0 +1,43 @@
+{% extends 'admin.html' %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+
+<form method="POST">{% csrf_token %}
+    <h1>Search</h1>
+    <label for="bname"><b>Book Name</b></label>
+    <input type="text" placeholder="Enter bookname" name="bname" required>
+    <button type="submit">Search</button>
+</form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+<table style="width:100%" border="1">
+    <tr>
+        <th>Book id</th>
+        <th>Book Name</th>
+        <th>Author</th>
+        <th>Number</th>
+
+    </tr>
+    {% for i in key %}
+    <tr>
+
+    <td>{{i.id}}</td>
+        <td>{{i.BookName}}</td>
+    <td>{{i.AuthorName}}</td>
+    <td>{{i.Number}}</td>
+
+    </tr>
+    {% endfor %}
+
+
+
+</table>
+</body>
+</html>
+  </div>
+</div>
+{% endblock %}

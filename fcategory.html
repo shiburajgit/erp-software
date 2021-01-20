@@ -1,0 +1,44 @@
+{% extends 'admin.html' %}
+{% block content %}
+ <h1>Fee Category</h1>
+<br>
+
+<div class="card">
+    <div class="card-body">
+    <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+<a href="/school/feeadd/">
+    <button type="submit" style="float:right">add</button>
+</a>
+<tr>
+    <th>id</th>
+    <th>fee category</th>
+    <th>edit</th>
+    <th>delete</th>
+
+</tr>
+<tr>{% for i in key1 %}
+    <td>{{ i.id }}</td>
+    <td>{{ i.category}}</td>
+    <td>
+        <a href="/school/feeedit/{{i.id}}">
+        <button type="submit">edit</button>
+        </a>
+        <input name="edit" value="{{i.id}}" hidden>
+    </td>
+    <td>
+        <form method="post">{% csrf_token %}
+            <button type="submit">delete</button>
+            <input name="delete" value="{{i.id}}" hidden>
+        </form>
+    </td>
+</tr>
+
+</tr>
+                  {% endfor %}
+
+        </table>
+
+</html>
+{% endblock %}

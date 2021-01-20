@@ -1,0 +1,34 @@
+{% extends 'admin.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+<form method="post">{% csrf_token %}
+    <label for="uname"><b>Academic Year</b></label>
+    <select name="academicyearname">
+        {% for i in key1 %}
+        <option value="{{i.id}}">{{ i.academicyearname }}</option>
+        {% endfor %}
+    </select>
+    <label for="uname"><b>course</b></label>
+    <select name="coursename">
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.coursename}}</option>
+        {% endfor %}
+    </select><br>
+
+
+
+    <label for="uname"><b>Category</b></label>
+ <input type="text" name="category" required>
+
+
+    <label for="uname"><b>amount</b></label>
+ <input type="text" name="amount" required>
+
+    <button type="submit">Submit</button>
+</form>
+    </div>
+</div>
+</form>
+{% endblock %}

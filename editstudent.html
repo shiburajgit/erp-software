@@ -1,0 +1,339 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>registration - Bootsnipp.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'admission/z8b1X_data/bootstrap_002.css' %}" rel="stylesheet" id="bootstrap-css">
+    <style type="text/css">
+    body {
+     background: url('https://static-communitytable.parade.com/wp-content/uploads/2014/03/rethink-target-heart-rate-number-ftr.jpg') fixed;
+    background-size: cover;
+}
+
+*[role="form"] {
+    max-width: 530px;
+    padding: 15px;
+    margin: 0 auto;
+    border-radius: 0.3em;
+    background-color: #f2f2f2;
+}
+
+*[role="form"] h2 {
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: #000000;
+    margin-top: 5%;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+
+    </style>
+    <script src="{% static 'admission/z8b1X_data/jquery.js' %}"></script>
+    <script src="{% static 'admission/z8b1X_data/bootstrap.js' %}"></script>
+    <script type="{% static 'admission/text/javascript' %}">
+        window.alert = function(){};
+        var defaultCSS = document.getElementById('bootstrap-css');
+        function changeCSS(css){
+            if(css) $('head > link').filter(':first').replaceWith('<link rel="stylesheet" href="'+ css +'" type="text/css" />');
+            else $('head > link').filter(':first').replaceWith(defaultCSS);
+        }
+        $( document ).ready(function() {
+          var iframe_height = parseInt($('html').height());
+          window.parent.postMessage( iframe_height, 'https://bootsnipp.com');
+        });
+
+    </script>
+</head>
+<body>
+<link href="{% static 'admission/z8b1X_data/bootstrap.css' %}" rel="stylesheet" id="bootstrap-css">
+<script src="{% static 'admission/z8b1X_data/bootstrap_002.js' %}"></script>
+<script src="{% static 'admission/z8b1X_data/jquery-2.js' %}"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+
+        <form class="form-horizontal" role="form" method="POST">{% csrf_token %}
+
+
+        <h2>REGISTRATION</h2>
+        <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Admission Number</label>
+            <div class="col-sm-9">
+                <input type="text" id="admissionnumber" placeholder="Admission Number" name="admissionnumber" value="{{key.AdmissionNumber}}"
+                class="form-control" autofocus="" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Admission Year</label>
+            <div class="col-sm-9">
+                <input type="text" id="admissionyear" placeholder="Admission Year" name="admissionyear" value="{{key.AdmissionYear}}"
+                       class="form-control">
+            </div>
+        </div>
+            <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Admitted Quata</label>
+            <div class="col-sm-9">
+                <select name="quata" class="form-control" required>
+                    <option value="">-- select quata --</option>
+                    {% for i in key3 %}
+                    <option value="{{i.id}}">{{i.AdmittedQuata}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <h3>Basic Details</h3>
+
+            <div class="form-group">
+            <label for="firstName" class="col-sm-3 control-label">First name</label>
+            <div class="col-sm-9">
+                <input type="text" id="firstname" placeholder="First Name" class="form-control" name="firstname" value="{{key.FirstName}}" required>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="firstName" class="col-sm-3 control-label">Last name</label>
+            <div class="col-sm-9">
+                <input type="text" id="lastname" placeholder="Last Name" class="form-control" name="lastname" value="{{key.LastName}}" required>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="email" class="col-sm-3 control-label">Email </label>
+            <div class="col-sm-9">
+                <input type="email" id="email" placeholder="Email" value="{{key.Email}}" class="form-control" name="email" required>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="birthDate" class="col-sm-3 control-label">Date of Birth</label>
+            <div class="col-sm-9">
+                <input type="text" id="birthDate" class="form-control" name="dob" value="{{ key.DOB|date:'Y-m-d' }}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Blood Group</label>
+            <div class="col-sm-9">
+
+                        <select value="{{bloodgroup}}" name="bloodgroup" required>
+                            <option value="">-------- select Blood Group ---------</option>
+                            <option value="A+">A+</option>
+                            <option value="B+">B+</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="A-">A-</option>
+                            <option value="AB+">AB-</option>
+                            <option value="B-">B-</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
+            <div class="col-sm-9">
+                <input type="phoneNumber" id="contactNumber" value="{{key.PhoneNumber}}" placeholder="Contact number" class="form-control"
+                       name="phonenumber" required>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName" class="col-sm-3 control-label">Contact details</label>
+            <div class="col-sm-9">
+                <input type="text" id="address" placeholder="Address" value={{key.ContactDetails}} class="form-control" name="contactdetails" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Gender</label>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-4">
+
+<label class="radio-inline">
+                                    <input type="radio" id="femaleRadio" name="gender" value="male" required>Male
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="maleRadio" name="gender" value="female" required>Female
+                                </label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Course Setting</h3>
+            <div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Academic Year </label>
+            <div class="col-sm-9">
+                <input type="phoneNumber" id="academicyear" value="{{key1.academicyearname}}" placeholder="Contact number" class="form-control"
+                       name="phonenumber" required>
+
+            </div>
+        </div>
+
+
+
+            <div class="form-group">
+            <label class="control-label col-sm-3">Course</label>
+            <div class="col-sm-9">
+
+
+    <select name="course" id="course" required >
+        <option value="">---------- select course ----------</option>
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.coursename }}</option>
+        {% endfor %}
+    </select>
+
+
+            </div>
+            </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Batch</label>
+            <div class="col-sm-9">
+
+
+    <select name="batch" id="batch" required >
+        <option value="">---------- select batch ---------</option>
+
+    </select>
+
+
+            </div>
+            </div>
+
+<div class="form-group">
+            <label for="phoneNumber" class="col-sm-3 control-label">Roll Number</label>
+            <div class="col-sm-9">
+                <input type="text" id="rollno" name="rollno" value="{{key.RollNo}}" placeholder="Roll Number" class="form-control" required>
+            </div>
+        </div>
+        <!-- /.form-group -->
+<form method="post">{% csrf_token %}
+        <button type="submit"  name="submit" class="btn btn-primary btn-block">Update</button>
+            <input id="msg" value="{{key3}}" hidden>
+</form>
+    </form> <!-- /form -->
+</div> <!-- ./container -->
+<script type="text/javascript">
+	$(function(){
+	$.validator.setDefaults({
+		highlight: function(element){
+			$(element)
+			.closest('.form-group')
+			.addClass('has-error')
+		},
+		unhighlight: function(element){
+			$(element)
+			.closest('.form-group')
+			.removeClass('has-error')
+		}
+	});
+
+	$.validate({
+		rules:
+		{
+		    password: "required",
+			birthDate: "required",
+			weight: {
+			    required:true,
+			    number:true
+			},
+			height:  {
+			    required:true,
+			    number:true
+			},
+			email: {
+				required: true,
+				email: true
+			}
+		},
+			messages:{
+				email: {
+				required: true,
+				email: true
+			}
+		},
+				password: {
+					required: " Please enter password"
+				},
+				birthDate: {
+					required: " Please enter birthdate"
+				},
+				email: {
+					required: ' Please enter email',
+					email: ' Please enter valid email'
+				},
+				weight: {
+					required: " Please enter your weight",
+					number: " Only numbers allowed"
+				},
+				height: {
+					required: " Please enter your height",
+					number: " Only numbers allowed"
+				},
+			}
+
+	});
+});
+{% endblock %}
+    {% block script %}
+
+<script>
+function checkUser(data,usr){
+                    var batcharray =[]
+                    var batcharrayid =[]
+                  for (i=0; i<data.length; i++){
+
+                    if( data[i].courseid.id == usr){
+                    batcharrayid.push(data[i].id);
+                    batcharray.push(data[i].batchname);
+                    }
+                  }
+                    var string=""
+                    for (i=0; i<batcharrayid.length; i++){
+                    string=string+"<option value='"+batcharrayid[i]+"'>"+batcharray[i]+"</option>"
+                    }
+                    document.getElementById("batch").innerHTML = string;
+
+                  }
+
+  $("#course").on("change",function(){
+
+        var us = $("#course").val()
+        var ourRequest = new XMLHttpRequest();
+        ourRequest.open('GET','/api/batchlist/')
+        ourRequest.onload = function(){
+                        var ourData = JSON.parse(ourRequest.responseText);
+
+                        checkUser(ourData,us);
+                      };
+                      ourRequest.send();
+         });
+
+
+
+    var x=document.getElementById("msg").value;
+    if(x=='yes'){
+    alert("already asigned")
+    }
+
+</script>
+{% endblock %}

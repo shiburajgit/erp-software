@@ -1,0 +1,159 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col col-md-6">
+            <div class="card">
+  <div class="card-body">
+
+    <form class="form-horizontal" role="form" method="POST" id="myForm">{% csrf_token %}
+        <h2>ORDER</h2>
+
+        <table>
+
+
+            <div class="form-group">
+                <tr>
+                    <td><label>Admission Number</label></td>
+                    <div class="col-sm-9">
+                        <td>
+                        <select name="admissionnumber" id="admissionnumber" class="form-control"  onchange="myFunction()" required>
+        <option value="">--    select Admission number   --</option>
+        {% for i in key3 %}
+         {% if i.id == key4  %}
+            <option value="{{i.id}}" selected>{{ i.AdmissionNumber }}</option>
+          {% else %}
+            <option value="{{i.id}}">{{ i.AdmissionNumber }}</option>
+                            {% endif %}
+        {% endfor %}
+    </select></td>
+                    </div>
+                </tr>
+            </div>
+
+
+            <div class="form-group">
+                <tr>
+                    <td><label>Book Name</label></td>
+                    <div class="col-sm-9">
+                        <div class="autocomplete" style="width:300px;">
+                        <td><input type="text" id="bookname" placeholder="Enter book name" class="form-control"
+                                   name="bookname">
+                        </td>
+                    </div>
+                </tr>
+            </div>
+        </table>
+        <td><input id="issue" type="submit" value="issue" name="issue"></td>
+        <td><input type="submit" value="return" name="return"></td>
+    </form>
+
+    </div>
+    </div>
+</div>
+
+    <br>
+        {% for i in key2 %}
+    <div class="col col-md-6" id="student">
+<!--    <div class="container">-->
+
+            <div class="card">
+  <div class="card-body">
+          <table>
+
+            <tr> <th>First Name:</th>
+            <td>{{i.FirstName}}</td></tr>
+            <tr><th>Last Name:</th>
+            <td>{{i.LastName}}</td></tr>
+            <tr> <th>Academic Year:</th>
+            <td>{{i.academicyear.academicyearname}}</td></tr>
+            <tr><th>Course:</th>
+            <td>{{i.course.coursename}}</td></tr>
+            <tr><th>Batch:</th>
+            <td>{{i.Batch.batchname}}</td></tr>
+            <tr><th>Roll No:</th>
+            <td>{{i.RollNo}}</td></tr>
+      {% endfor %}
+          </table></div>
+            </div>
+
+
+        </table>
+<!--    </div>-->
+    </div>
+</div>
+
+        <!-- Main content -->
+    <div class="card" id="order">
+  <div class="card-body">
+        <section class="content">
+    <div class="row">
+        <div class="col-12">
+
+                <!-- /.card-header -->
+
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                                <tr>
+                                    <th>Admission Number</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Book Name</th>
+                                    <th>Issue date</th>
+                                    <th>Due Date</th>
+                                    <th>Return date</th>
+                                    <th>Fine</th>
+
+                                </tr>
+                        </thead>
+                        <tbody>
+                                {% for i in key %}
+                                <tr>
+                                    <td>{{i.student.AdmissionNumber}}</td>
+                                    <td>{{i.student.FirstName}}</td>
+                                    <td>{{i.student.LastName}}</td>
+                                    <td>{{i.BookName}}</td>
+                                    <td>{{i.issuedate}}</td>
+                                    <td>{{i.duedate}}</td>
+                                    <td>{{i.returndate}}</td>
+                                    <td>{{i.fine}}</td>
+
+                                </tr>
+                                {% endfor %}
+                            </table>
+
+
+                            <input type="text" value= "{{key1 }}" id="key1" hidden>
+
+
+
+                            <!--<table style="width:100%" border="1">-->
+
+                        </tbody>
+
+                    </table>
+
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+  </div>
+    </div>
+ {% endblock %}
+{% block script %}
+<script>
+ var x=document.getElementById("key1").value;
+ if (x=="yes"){
+    alert("Not available")}
+else if(x=="No"){
+    alert("No such books")}
+  function myFunction() {
+  document.getElementById("issue").click();
+}
+
+</script>
+{% endblock %}

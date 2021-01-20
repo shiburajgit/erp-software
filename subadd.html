@@ -1,0 +1,40 @@
+{% extends 'admin.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+    <form method="post">{% csrf_token %}
+
+    <label><b>FeeCategory</b></label>
+    <select name="feecategory">
+        <option>-select-</option>
+        {% for i in key1 %}
+        <option value="{{i.id}}">{{ i.category}}</option>
+        {% endfor %}
+    </select>
+
+    <label><b>Feetype</b></label>
+    <select name="feetype">
+        <option>-select-</option>
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.feetype}}</option>
+        {% endfor %}
+    </select>
+
+    <label><b>Fromdate</b></label>
+    <input type="date" name="fromdate" required>
+
+    <label><b>Duedate</b></label>
+    <input type="date" name="duedate" required><br>
+
+    <label><b>Amount</b></label>
+ <input type="text" name="amount" required>
+
+    <button type="submit">save</button>
+
+</form>
+    </div>
+</div>
+
+
+{% endblock %}

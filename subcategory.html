@@ -1,0 +1,22 @@
+{% extends 'admin.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+<form method="post">{% csrf_token %}
+
+    <label for="uname"><b>course</b></label>
+    <select name="coursename">
+        {% for i in key1 %}
+        <option value="{{i.id}}">{{ i.coursename}}</option>
+        {% endfor %}
+    </select>
+    <label for="uname"><b>Subcategory</b></label>
+ <input type="text" name="subcategory" required>
+
+    <button type="submit">Submit</button>
+</form>
+    </div>
+</div>
+</form>
+{% endblock %}

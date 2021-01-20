@@ -1,0 +1,19 @@
+{% extends 'admin.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Add</h1>
+<form method="post">{% csrf_token %}
+<label for="name">feetype</label>
+<input type="text" placeholder="enter fee type" name="feetype" required>
+<button type="submit">add</button>
+    </form>
+</body>
+</html>
+{% endblock %}

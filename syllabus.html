@@ -1,0 +1,12 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+  <head>
+    <title>Title of the document</title>
+  </head>
+  <body>
+    <h1>Syllabus</h1>
+  <embed src="{{ file.syllabus.url }}" type="application/pdf" width="100%" height="600px" />
+
+  </body>
+{% endblock %}

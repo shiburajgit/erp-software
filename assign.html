@@ -1,0 +1,52 @@
+{% extends 'admin.html' %}
+{% block content %}
+<h1>Assign</h1>
+<br>
+</div>
+<div class="card">
+    <div class="card-body">
+    <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+<a href="/school/assignadd/">
+    <button type="submit" style="float:right">add</button>
+</a>
+<tr>
+    <th>VehicleStop</th>
+    <th>vehicleRoute</th>
+    <th>Drop</th>
+    <th>Pick</th>
+    <th>Amount</th>
+    <th>edit</th>
+    <th>delete</th>
+</tr>
+            {% for i in key3 %}
+                    <tr>
+                    <td>{{i.busstop.busstop }}</td>
+                    <td>{{i.route.routename}}</td>
+                    <td>{{i.Drop}}</td>
+                    <td>{{i.pick}}</td>
+                    <td>{{i.transportprice}}</td>
+<!----><td>
+
+        <a href="/school/assignedit/{{i.id}}">
+        <button type="submit">edit</button>
+        </a>
+        <input name="edit" value="{{ i.id }}" hidden>
+    </td>
+                        <td>
+                    <form method="post">{% csrf_token %}
+                    <button type="submit">delete</button>
+                    <input name="delete" value="{{i.id}}" hidden>
+                    </form>
+                </td>
+
+                </tr>
+<!---->
+            {% endfor %}
+                    </thead></table>
+    </div>
+</div>
+{% endblock %}
+
+

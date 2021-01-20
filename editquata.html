@@ -1,0 +1,18 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<h2>Edit Quata</h2>
+<br>
+<div class="card">
+    <div class="card-body">
+
+<form method="post">{% csrf_token %}
+
+    <label for="uname"><b>Quata</b></label>
+    <input type="text" name="quata" placeholder="Enter quata" value="{{ob.AdmittedQuata}}" required>
+    <button type="submit" class="btn btn-secondary" >Submit</button>
+</form>
+    </div>
+</div>
+
+{% endblock %}

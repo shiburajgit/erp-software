@@ -1,0 +1,127 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main content -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                <h1>Book</h1>
+
+
+                <form method="post">{% csrf_token %}
+
+                    <button type="submit" name="add" style="float: right;" class="btn btn-secondary"  >Add Book</button>
+
+</form>
+
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+
+</section>
+
+<div class="card" >
+            <div class="card-header">
+
+                <form method="post">{% csrf_token %}
+<label for="bname"><b> Book Search</b></label>
+
+    <input type="text" placeholder="Enter bookname" name="bookname"  required>
+                <button type="submit" name="search" >Search</button>
+                </form>
+            </div>
+
+ <div class="card">
+  <div class="card-body">
+      <section class="content">
+    <div class="row">
+        <div class="col-12">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+      <tr>
+          <th>#</th>
+          <th>Book Name</th>
+          <th>Author Name</th>
+        <th>Category</th>
+        <th>Total Count</th>
+        <th>Number</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+    {% for i in key %}
+    <tr>
+
+    <td>{{forloop.counter}}</td>
+        <td>{{i.BookName}}</td>
+    <td>{{i.AuthorName}}</td>
+        <td>{{i.category}}</td>
+        <td>{{i.TotalCount}}</td>
+    <td>{{i.Number}}</td>
+        <td><form method ='post'>{% csrf_token %}
+            <button type="submit">Delete</button>
+            <input name="delete" value="{{i.id}}" hidden>
+        </form>
+        </td>
+        <td>
+            <a href="/school/editbook/{{i.id}}/">
+            <button type="submit">Edit</button>
+                </a>
+        </td>
+    </tr>
+    {% endfor %}
+ </table>
+                </div>
+
+            </div>
+
+
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+<!-- /.content-wrapper -->
+
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+    });
+  });
+
+</script>
+</body>
+</html>
+
+{% endblock %}
+
+

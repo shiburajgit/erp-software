@@ -1,0 +1,125 @@
+{% extends 'admin.html' %}
+{% block content %}
+<h1>Time Table</h1>
+<br>
+<div class="card">
+  <div class="card-body">
+
+
+<form method="POST" >{% csrf_token %}
+
+<label for="uname"><b>Academic Year</b></label>
+    <input name="academicyear" id="academicyear" value="{{key1.academicyearname}}">
+
+<label for="uname"><b>Course</b></label>
+                   <select name="course" id="course" required>
+                       <option value="">-- select course --</option>
+                       {% for i in key2 %}
+
+                            <option value="{{i.id}}">{{i.coursename}}</option>
+  {% endfor %}
+</select>
+<label for="psw"><b>Batch</b></label>
+                   <select name="batch" id="batch" required>
+                       "<option value="">-- select batch --</option>"
+
+                   </select>
+    <button type="submit" name="search" class="btn btn-secondary">Search</button>
+
+  </div>
+</div>
+
+      <div class="card">
+  <div class="card-body">
+<section class="content">
+
+    <div class="row">
+        <div class="col-12">
+
+                    <table id="example2" class="table table-bordered table-hover">
+
+                        <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Period1</th>
+                                    <th>Period2</th>
+                                    <th>Period3</th>
+                                    <th>Period4</th>
+                                    <th>Period5</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+
+                                 {% for j in key4 %}
+                                <tr>
+                                    <td>
+                                        <span style="font-weight: bold;">{{j.Day}}</span>
+                                       <hr> Break<br>
+                                        {% for i in key3 %}
+                                    {% if i.Day == j.Day %}
+                                    {% if i.isbreak == True %}
+                                   {{i.starttime}}-{{i.endtime}}<br>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                    </td>
+                                    {% for i in key3 %}
+                                    {% if i.Day == j.Day %}
+                                    {% if i.isbreak == False %}
+                                   <td>
+                                       {{i.starttime}}-{{i.endtime}}<br>
+                                       {{ i.subject.subject}}<br>
+                                {{i.teacher.Name}}
+
+                                   </td>
+
+
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                 {% endfor %}
+
+                            <!--<table style="width:100%" border="1">-->
+
+                        </tbody>
+
+                    </table>
+            </form>
+        </div>
+    </div>
+            {% endblock %}
+    {% block script %}
+    <script>
+    function checkUser(data,usr){
+                    console.log(data)
+                    var batcharray =[]
+                    var batcharrayid =[]
+                  for (i=0; i<data.length; i++){
+                    if( data[i].courseid.id == usr){
+                    batcharrayid.push(data[i].id);
+                    batcharray.push(data[i].batchname);
+                    }
+                  }
+                    var string="<option>-- select batch --</option>"
+
+                    for (i=0; i<batcharrayid.length; i++){
+                    string=string+"<option value='"+batcharrayid[i]+"'>"+batcharray[i]+"</option>"
+                    }
+                    document.getElementById("batch").innerHTML = string;
+                  }
+                  $("#course").on("change",function(){
+
+        var us = $("#course").val()
+        var ourRequest = new XMLHttpRequest();
+        ourRequest.open('GET','/api/batchlist/')
+        ourRequest.onload = function(){
+                        var ourData = JSON.parse(ourRequest.responseText);
+
+                        checkUser(ourData,us);
+                      };
+                      ourRequest.send();
+         });
+
+    </script>
+    {% endblock %}

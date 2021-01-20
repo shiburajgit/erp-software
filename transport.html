@@ -1,0 +1,138 @@
+{% extends 'admin.html' %}
+{% block content %}
+<h1>Add</h1>
+<br>
+<div class="card">
+    <div class="card-body">
+    <form method='post'>{% csrf_token %}
+        <label for="uname"><b>course</b></label>
+    <select name="coursename" id="course" required>
+                <option value="">-select-</option>
+
+        {% for i in key2 %}
+        <option value="{{i.id}}">{{ i.coursename}}</option>
+        {% endfor %}
+    </select>
+        <label for="uname"><b>Admission number</b></label>
+    <select name="admissionnumber"id="admission" required>
+        <option value="">-select-</option>
+        {% for i in key1 %}
+        <option value="{{ i.id }}">{{ i.AdmissionNumber }}</option>
+{% endfor %}
+    </select>
+
+
+    <label for="uname"><b>stop</b></label>
+    <select name="stopname" required>
+                <option value="">-select-</option>
+
+        {% for i in key6 %}
+        <option value="{{i.id}}">{{i.busstop.busstop}}</option>
+        {% endfor %}
+    </select>
+
+
+
+    <label for="uname"><b>route</b></label>
+    <select name="routename" required>
+                <option value="">-select-</option>
+
+        {% for i in key6 %}
+        <option value="{{i.id}}">{{ i.route.routename}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Submit</button>
+        <input type="text" value="{{msg}}" id ='msg' name="msg" hidden>
+    </form>
+    </div>
+</div>
+
+</form>
+
+<div class="card">
+    <div class="card-body">
+     <div class="box-body">
+              <table id="example2" class="table table-bordered table-hover">
+                <thead>
+<tr>
+    <th>Firstname</th>
+    <th>Course</th>
+    <th>Stop</th>
+    <th>Route</th>
+    <th>VehicleNo</th>
+    <th>Drop</th>
+    <th>Pick</th>
+    <th>Amount</th>
+</tr>
+{% for i in key5 %}
+<tr>
+
+
+    <td>{{ i.admissionnumber.FirstName }}</td>
+    <td>{{ i.coursename.coursename }}</td>
+    <td>{{ i.route.busstop.busstop}}</td>
+    <td>{{ i.route.route.routename}}</td>
+    <td>{{i.route.route.busno.busnumber }}</td>
+    <td>{{i.route.Drop}}</td>
+    <td>{{i.route.pick}}</td>
+    <td>{{ i.route.transportprice}}</td>
+
+
+
+
+</tr>
+
+{% endfor %}
+                </thead>
+                </thead>
+
+
+              </table>
+     </div>
+    </div>
+
+
+
+
+{% endblock %}
+    {% block script %}
+    <script>
+var x=document.getElementById("msg").value;
+console.log(x)
+    if(x=='yes'){
+    alert("already assigned")
+    }
+function checkUser(data,usr){
+                    var admissionarray =[]
+                    var admissionarrayid =[]
+                  for (i=0; i<data.length; i++){
+
+                    if( data[i].course.id == usr){
+                    admissionarrayid.push(data[i].id);
+                    admissionarray.push(data[i].AdmissionNumber);
+                    }
+                  }
+                    var string=""
+                    for (i=0; i<admissionarrayid.length; i++){
+                    string=string+"<option value='"+admissionarrayid[i]+"'>"+admissionarray[i]+"</option>"
+                    }
+                    document.getElementById("admission").innerHTML = string;
+
+                  }
+
+  $("#course").on("change",function(){
+
+        var us = $("#course").val()
+        var ourRequest = new XMLHttpRequest();
+        ourRequest.open('GET','/api/studentlist/')
+        ourRequest.onload = function(){
+                        var ourData = JSON.parse(ourRequest.responseText);
+
+                        checkUser(ourData,us);
+                      };
+                      ourRequest.send();
+         });
+
+
+</script>
+{% endblock %}

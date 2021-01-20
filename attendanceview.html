@@ -1,0 +1,25 @@
+{% extends 'admin.html' %}
+{% load static %}
+{% block content %}
+<table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Admission number</th>
+                        <th>First name</th>
+                        <th>Last Name</th>
+                        <th>Attendance</th>
+                        <th>Reason</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+{% for i in key4 %}
+                        <tr>
+                            <td>{{i.AdmissionNumber}}
+                            <input name="student" type="text" value="{{i.id}}" hidden></td>
+                        <td>{{i.FirstName}}</td>
+                        <td>{{i.LastName}}</td>
+                            <td>{{i.attendance}}</td>
+                            <td>{{i.reason}}</td>
+                            {% endfor %}
+                            {% endblock %}
